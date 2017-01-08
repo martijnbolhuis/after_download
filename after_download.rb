@@ -54,35 +54,26 @@ def stop_torrent
   deluge.remove_torrent(torrent_id, remove_data: false)
 end
 
+puts "=== Processing #{torrent_name}"
 stop_torrent
+puts "* Torrent stopped"
 movie = find_imdb_movie( sanitized_title(torrent_name) )
 
 if movie
   title = get_original_title(movie)
+  puts "* Movie found: #{title}"
   destionation_path = if is_serie?(movie, torrent_name)
+    puts "* Recognized as a TV-serie."
     File.join(CONFIG['series_path'], title)
   else
+    puts "* Recognized as a movie"
     File.join(CONFIG['movies_path'])
   end
+  puts "* Copy to #{destionation_path}"
   downloaded_file = File.join(CONFIG['downloads_path'], torrent_name)
   FileUtils.mkdir_p(destionation_path)
   FileUtils.mv(downloaded_file, destionation_path)
+else
+  puts "* No match found"
 end
-#TESTS = [
-#  "From [ WWW.TORRENTING.COM  ] - Designated.Survivor.S01E07.720p.HDTV.X264-DIMENSION",
-#  "The.Accountant.2016.1080p.BluRay.x264-SPARKS[EtHD]",
-#  "The.Intouchables.2011.1080p.BluRay.x264.[ExYu-Subs].mp4",
-#  "Discovery.Channel.Nubia.The.Forgotten.Kingdom.XviD.AC3.MVGroup.org.avi",
-#  "Shooter.S01E05.WEBRip.XviD-FUM[ettv]"
-#]
-
-#TESTS.each do |torrent_name|
-#  movie = find_imdb_movie( sanitized_title(torrent_name) )
-#  if movie
-#    title = movie.title.gsub(/\(.*\)/, '').strip
-#    puts "#{title} #{is_serie?(movie, torrent_name)}"
-#  else
-#    puts "No match found for #{torrent_name}"
-#  end
-#end
 
