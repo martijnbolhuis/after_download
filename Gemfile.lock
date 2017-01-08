@@ -1,0 +1,21 @@
+GEM
+  remote: https://www.rubygems.org/
+  specs:
+    deluge (1.0.0)
+    imdb (0.8.2)
+      nokogiri (= 1.6.2.1)
+    mini_portile (0.6.0)
+    nokogiri (1.6.2.1)
+      mini_portile (= 0.6.0)
+    similar_text (0.0.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  deluge!
+  imdb (~> 0.8)!
+  similar_text!
+
+BUNDLED WITH
+   1.13.7
